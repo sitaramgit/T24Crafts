@@ -57,13 +57,7 @@
 			$this->inParamProcess["encoded"] = &$this->formatObjects[$this->format]["decode"];
 			$this->fillOperationDetails($operationName);
 		}
-		function OperationManager($adb,$operationName,$format, $sessionManager){
-			// PHP4-style constructor.
-			// This will NOT be invoked, unless a sub-class that extends `foo` calls it.
-			// In that case, call the new-style constructor to keep compatibility.
-			self::__construct($adb,$operationName,$format, $sessionManager);
-			
-		}
+	
 		
 		function isPreLoginOperation(){
 			return $this->preLogin == 1;

@@ -79,12 +79,12 @@ $dbconfigoption['ssl'] = false;
 
 $host_name = $dbconfig['db_hostname'];
 
-$site_URL = 'http://localhost/T24Crafts/';
+$site_URL = 'http://localhost/T24Crafts/T24Crafts-admin';
 
 // url for customer portal (Example: http://vtiger.com/portal)
 $PORTAL_URL = $site_URL.'/customerportal';
 // root directory path
-$root_directory = 'C:\xampp\htdocs\T24Crafts/';
+$root_directory = 'C:\xampp\htdocs\T24Crafts\T24Crafts-admin/';
 
 // cache direcory path
 $cache_dir = 'cache/';

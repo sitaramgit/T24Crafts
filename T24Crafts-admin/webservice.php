@@ -72,6 +72,12 @@ require_once("config.php");
 
 	}
 
+	function writeApiOutput($data){
+		print_r($data);
+		echo $data;
+
+	}
+
 	$operation = vtws_getParameter($_REQUEST, "operation");
 	$operation = strtolower($operation);
 	$format = vtws_getParameter($_REQUEST, "format","json");
