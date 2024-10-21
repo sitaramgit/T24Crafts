@@ -1,5 +1,0 @@
-vendor/*
-!vendor/.htaccess
-.vscode/*
-test/*
-test
