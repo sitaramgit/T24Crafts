@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 4.5.4, created on 2024-10-19 18:30:44
+/* Smarty version 4.5.4, created on 2024-10-20 18:27:19
   from 'C:\xampp\htdocs\T24Crafts\T24Crafts-admin\layouts\v7\modules\Vtiger\ListViewActions.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.5.4',
-  'unifunc' => 'content_6713fad4d341c2_22370686',
+  'unifunc' => 'content_67154b87543598_52226035',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6713fad4d341c2_22370686 (Smarty_Internal_Template $_smarty_tpl) {
+function content_67154b87543598_52226035 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'C:\\xampp\\htdocs\\T24Crafts\\T24Crafts-admin\\vendor\\smarty\\smarty\\libs\\plugins\\modifier.count.php','function'=>'smarty_modifier_count',),));
 ?>
 

@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 4.5.4, created on 2024-10-19 18:21:48
+/* Smarty version 4.5.4, created on 2024-10-20 18:27:20
   from 'C:\xampp\htdocs\T24Crafts\T24Crafts-admin\layouts\v7\modules\Vtiger\Footer.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.5.4',
-  'unifunc' => 'content_6713f8bc997918_85258175',
+  'unifunc' => 'content_67154b88a0a9a9_51904915',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6713f8bc997918_85258175 (Smarty_Internal_Template $_smarty_tpl) {
+function content_67154b88a0a9a9_51904915 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <footer class="app-footer">
 	<p>

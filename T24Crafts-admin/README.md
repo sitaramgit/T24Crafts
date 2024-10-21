@@ -66,3 +66,5 @@ repository as an upstream remote (only need to do this bit once), then you can f
     git remote add upstream https://code.vtiger.com/vtiger/vtigercrm.git
     git fetch upstream
     git merge upstream/master
+
+vtiger_ws_operation
