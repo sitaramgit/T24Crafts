@@ -1,7 +1,7 @@
 export const apiEndPoints = {
     auth: {
         register: '/auth/register',
-        googleLogin: 'operation=createUser',
+        googleLogin: '/users/loginWithGoogle',
         login: '/auth/login'
     },
     posts: {
@@ -9,6 +9,6 @@ export const apiEndPoints = {
         getAllPosts: '/posts/get-all-posts',
     },
     host_api: {
-        host: 'http://localhost/T24Crafts/T24Crafts-admin/api.php?'
+        host: 'http://localhost:3000'
     }
 }

@@ -19,6 +19,8 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { API_REQUESTS } from '../../common/apiRequests';
 import axios from 'axios';
 import { httpService } from '../../services/httpService';
+import { accessToken } from '../../store/reducer/loginSlice';
+import { useDispatch } from 'react-redux';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -50,13 +52,12 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 const Login = () => {
+    const dispatch = useDispatch()
     const [emailError, setEmailError] = useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
     const [open, setOpen] = useState(false);
-
-    console.log(process.env.REACT_APP_G_CLIENT_SECRET)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -114,7 +115,7 @@ const Login = () => {
             "email": "sitaramkdks@gmail.com",
             "email_verified": true
           }
-          API_REQUESTS.SOCIAL_LOGIN.PAYLOAD = payload;
+          API_REQUESTS.SOCIAL_LOGIN.PAYLOAD = {"code":"4/0AVG7fiS-WryFbzANjmvayS09Xb1Z2I8UtgtaibhFvddB4mAIAeG6poVv1LFPCsd0SX9jrw"};
           try {
            const data = await httpService(API_REQUESTS.SOCIAL_LOGIN);
            console.log(data)
@@ -122,43 +123,32 @@ const Login = () => {
             console.log(error)
           }
     }
-    const loginWithGoogle = useGoogleLogin({
-        onSuccess: async (codeResponse: any) => {
-            console.log('Access Token:', codeResponse);
-            const param = {
-                code: codeResponse.code,
-                client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID, // Replace with your actual Client ID
-                client_secret: process.env.REACT_APP_G_CLIENT_SECRET, // Replace with your actual Client Secret
-                redirect_uri: 'http://localhost:3000',
-                grant_type: 'authorization_code',
-              };
-              console.log(param);
-            try {
-                // Exchange the authorization code for an access token
-                const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', null, {
-                  params: param,
-                });
-          
-                const accessToken = tokenResponse.data.access_token;
-                console.log('Access Token:', accessToken);
-          
-                // Fetch the user details using the access token
-                const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
-                  headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                });
-          
-                console.log('User Info:', userInfoResponse.data);
-                // setUserDetails(userInfoResponse.data);
-              } catch (err) {
-                console.error('Error during the token exchange or fetching user info:', err);
-              }
+   
+      const loginWithGoogle = useGoogleLogin({
+        onSuccess: async ({ code }) => {
+          API_REQUESTS.SOCIAL_LOGIN.PAYLOAD = { code };
+          console.log(API_REQUESTS)
+          try {
+            const request = await httpService(API_REQUESTS.SOCIAL_LOGIN);
+            console.log(request)
+            dispatch(accessToken(request));
+            // setError({
+            //   isError: true,
+            //   message: "Login successful!",
+            //   alertType: "success",
+            // });
+          } catch (error) {
+            console.log(error)
+            // setError({
+            //   isError: true,
+            //   message: "Forbidden: You do not have access.",
+            //   alertType: "error",
+            // });
+          }
         },
         flow: "auth-code",
         onError: (error) => console.log("Login Failed:", error),
       });
-      
     return (
         <SignInContainer direction="column" justifyContent="space-between">
             <Card variant="outlined">
@@ -238,7 +228,7 @@ const Login = () => {
                     <Button
                         fullWidth
                         variant="outlined"
-                        onClick={createUser}
+                        onClick={loginWithGoogle}
                         startIcon={<GoogleIcon />}
                     >
                         Sign in with Google
