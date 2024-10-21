@@ -172,7 +172,7 @@ $payload = [
 $contact = new Contacts();
 $contact->column_fields = $payload;
 $contact->column_fields['firstname'] = $input_array['given_name'];
-$contact->column_fields['description'] = 'Additional contact details here';
+$contact->column_fields['description'] = 'Additional contact details here1';
 // return $contact;
 
 try {
