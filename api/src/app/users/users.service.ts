@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Role } from './entities/role.entity';
 
 
 @Injectable()
@@ -15,7 +16,10 @@ export class UsersService {
 
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>, // Inject User repository
+  
+    @InjectRepository(Role)
+    private readonly roleRepository: Repository<Role>, // Inject Role repository
   ) {
     this.oAuth2Client = new OAuth2Client(
       process.env.CLIENT_ID,
@@ -36,6 +40,10 @@ export class UsersService {
       console.error('Error registering user: ', error);
       throw new HttpException('Error registering user', HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  async getAllRoles(): Promise<Role[]> {
+    return this.roleRepository.find();
   }
 
   async login(email: string, password: string) {

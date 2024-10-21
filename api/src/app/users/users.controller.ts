@@ -17,9 +17,9 @@ export class UsersController {
     return this.usersService.googleLogin(body.code);
 }
 
-  @Get('/data')
-  findAll() {
-    return this.usersService.findAll();
+  @Get('getAllRoles')
+  getAllRoles() {
+    return this.usersService.getAllRoles();
   }
 
   @Get(':id')
