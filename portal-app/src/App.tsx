@@ -7,10 +7,12 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import Login from './pages/auth/Login';
+import Profile from './pages/Profile';
 
 function App() {
   return (
-    <Login/>
+    // <Login/>
+    <Profile />
   );
 }
 
