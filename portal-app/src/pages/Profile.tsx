@@ -72,7 +72,7 @@ const Profile = () => {
             <ContentCard>
                 <CardContent>
                     <Typography variant="h4" align="center">
-                    {`${loggedUser.firstName} ${loggedUser.firstName}`}
+                    {`${loggedUser.firstName} ${loggedUser.lastName}`}
                     </Typography>
                     <Typography variant="subtitle1" align="center">
                         New York, United States

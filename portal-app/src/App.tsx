@@ -8,11 +8,19 @@ import '@fontsource/roboto/700.css';
 
 import Login from './pages/auth/Login';
 import Profile from './pages/Profile';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import CreateProfile from './components/CreateProfile';
+import Home from './pages/Home';
 
 function App() {
   return (
-    // <Login/>
-    <Profile />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </Router>
   );
 }
 
