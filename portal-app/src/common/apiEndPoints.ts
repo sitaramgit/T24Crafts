@@ -8,6 +8,14 @@ export const apiEndPoints = {
         createPost: '/posts/create-post',
         getAllPosts: '/posts/get-all-posts',
     },
+    users: {
+        getAllRoles: '/users/getAllRoles',
+        getAllPosts: '/posts/get-all-posts',
+    },
+    profile: {
+        createPost: '/posts/create-post',
+        getAllPosts: '/posts/get-all-posts',
+    },
     host_api: {
         host: 'http://localhost:3000'
     }

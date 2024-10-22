@@ -1,5 +1,5 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 // import { User } from '../../users/'; // Assuming User entity exists
 
@@ -20,8 +20,7 @@ export class UserProfile {
   @Column()
   role: string;  // Enum for roles like Artist, Manager, etc.
 
-  @OneToOne(() => User, (user) => user.profile)
+  @OneToOne(() => User) 
+  @JoinColumn({ name: 'userId' }) // Creates the foreign key userId in UserProfile
   user: User;
-
-  // Add other profile details as needed
 }

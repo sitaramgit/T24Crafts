@@ -29,4 +29,9 @@ export const API_REQUESTS = {
         URL: apiEndPoints.posts.getAllPosts,
         PAYLOAD: {}
     },
+    GET_ALL_ROLES: {
+        METHOD: 'GET',
+        URL: apiEndPoints.users.getAllRoles,
+        PAYLOAD: {}
+    },
 }

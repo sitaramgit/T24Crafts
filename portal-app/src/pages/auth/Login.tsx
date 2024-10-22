@@ -21,6 +21,7 @@ import axios from 'axios';
 import { httpService } from '../../services/httpService';
 import { accessToken } from '../../store/reducer/loginSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -52,7 +53,8 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 const Login = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [emailError, setEmailError] = useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);
@@ -131,6 +133,7 @@ const Login = () => {
           try {
             const request = await httpService(API_REQUESTS.SOCIAL_LOGIN);
             console.log(request)
+            navigate('/');
             dispatch(accessToken(request));
             // setError({
             //   isError: true,

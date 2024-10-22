@@ -51,7 +51,4 @@ export class User {
   @JoinTable()
   roles: Role[]; // No initialization here
 
-  @OneToOne(() => UserProfile, (profile) => profile.user)
-  @JoinColumn()  // Required to establish the foreign key relationship in the database
-  profile: UserProfile;
 }

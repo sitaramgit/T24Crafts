@@ -7,6 +7,7 @@ import { User } from './users/entities/user.entity';
 import { Role } from './users/entities/role.entity';
 import { UsersModule } from './users/users.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
+import { UserProfile } from './user-profile/entities/user-profile.entity';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { UserProfileModule } from './user-profile/user-profile.module';
       username: 'root',
       password: '',
       database: 'nest_t24db_dev',
-      entities: [User, Role],
+      entities: [User, Role, UserProfile],
       synchronize: true, // This automatically creates tables, use false in production!
     }),
     UsersModule,
