@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Card, CardContent, CardActions, Button, Avatar, Typography, Box, Slide, Dialog } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { alpha, color, Stack, styled } from '@mui/system';
@@ -11,6 +11,7 @@ import ReactModal from '../common-ui/ReactModal';
 import ForumTwoToneIcon from '@mui/icons-material/ForumTwoTone';
 import PeopleOutlineTwoToneIcon from '@mui/icons-material/PeopleOutlineTwoTone';
 import { TransitionProps } from '@mui/material/transitions';
+import BackButton from '../common-ui/BackButton';
 // Styled Components
 const ProfilePage = styled('div')({
     display: 'flex',
@@ -103,8 +104,12 @@ const Profile = () => {
     const loggedUser = useSelector((state: any) => state.login.userDetails);
     console.log(loggedUser)
     const [showForm, setShowForm] = useState(false);
+    const closeForm = useCallback(()=>  setShowForm(false),[])
     return (
+        <Box>
+        <BackButton/>
         <ProfilePage>
+            
             <ContentCard>
 
                 <Cover>
@@ -180,7 +185,7 @@ const Profile = () => {
                 onClose={() => setShowForm(false)}
                 TransitionComponent={Transition}
             >
-                <CreateProfile isShow={showForm} onClose={() => setShowForm(false)} />
+                <CreateProfile isShow={showForm} onClose={closeForm} />
             </Dialog>}
             {/* {showForm &&
                 <ReactModal
@@ -191,6 +196,7 @@ const Profile = () => {
             } */}
 
         </ProfilePage>
+        </Box>
     );
 }
 export default Profile
