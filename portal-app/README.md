@@ -62,3 +62,24 @@ npm install react-router-dom
 to store the data we used redux
 npm install react-redux
 npm install @reduxjs/toolkit
+
+#mobile setup
+Capacitor in your React project:
+npm install @capacitor/core @capacitor/cli
+
+Initialize Capacitor
+npx cap init T24Crafts com.t24crafts.app
+
+Add mobile platforms (Android/iOS) to your React project:
+npx cap add android
+npx cap add ios
+
+Before syncing with Capacitor, make sure your React app is built:
+npm run build
+
+Sync your build files with Capacitor, which will copy them to the native Android/iOS project:
+npx cap sync
+
+After syncing, open the project in Android Studio or Xcode:
+npx cap open android
+npx cap open ios
