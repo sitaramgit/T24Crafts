@@ -29,14 +29,23 @@ interface IFormInput {
     address: string;
     description: string;
   }
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }
 const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
     const [roles, setRoles] = useState([]);
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors },
-      } = useForm<IFormInput>();
-
+      } = useForm<FormData>();
+    
+      const password = watch("password");
     useEffect(() => {
         getRoles();
     }, [])
@@ -51,105 +60,107 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
         }
     }
 
-     // Define the submit handler
-  const onSubmit: SubmitHandler<IFormInput> = useCallback((data, e:any): void => {
-    console.log(data)
-    e.preventDefault()
-    
-}, [])
+    const onSubmit = handleSubmit((data) => {
+        if(data){
+         console.log(data)
+          
+        }
+        
+      });
 
     return (
-        <Container >
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid container spacing={2}>
-                    <Grid size={{ xs: 12 }}>
-                        <FormControl fullWidth>
-                            <InputLabel>Role</InputLabel>
-                            <Select
-                                {...register("role", { required: 'Role is required' })}
-                                label="Role"
-                            >
-                                {roles.map((role: any) => (
-                                    <MenuItem key={role.id} value={role.id}>{role.roleName}</MenuItem>
-                                ))}
-                            </Select>
-                            {errors.role && <span>{errors.role.message as string}</span>}
-                        </FormControl>
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <TextField
-                            label="First Name"
-                            fullWidth
-                            margin="dense"
-                            helperText={errors.firstname && "Please First your name"}
-                            // helperText={'Please enter first name'}
-                            {...register("firstname", { required: 'First Name is required' })}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <TextField
-                            label="Last Name"
-                            fullWidth
-                            margin="dense" // Changed to dense for smaller spacing
-                            error={!!errors.lastname}
-                            helperText={errors.lastname ? errors.lastname.message as string : ''}
-                            {...register("lastname", { required: 'Last Name is required' })}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <FormControl fullWidth error={!!errors.gender}>
-                            <InputLabel>Gender</InputLabel>
-                            <Select
-                                {...register("gender", { required: 'Gender is required' })}
-                                label="Gender"
-                            >
-                                <MenuItem value="Male">Male</MenuItem>
-                                <MenuItem value="Female">Female</MenuItem>
-                                <MenuItem value="Other">Other</MenuItem>
-                            </Select>
-                            {errors.gender && <span>{errors.gender.message as string}</span>}
-                        </FormControl>
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <TextField
-                            label="Date of Birth"
-                            type="date"
-                            fullWidth
-                            margin="dense" // Changed to dense for smaller spacing
-                            InputLabelProps={{ shrink: true }}
-                            error={!!errors.dob}
-                            helperText={errors.dob ? errors.dob.message as string : ''}
-                            {...register("dob", { required: 'Date of Birth is required' })}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12 }}>
-                        <TextField
-                            label="Address"
-                            fullWidth
-                            margin="dense" // Changed to dense for smaller spacing
-                            error={!!errors.address}
-                            helperText={errors.address ? errors.address.message as string : ''}
-                            {...register("address", { required: 'Address is required' })}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12 }}>
-                        <TextField
-                            label="Description"
-                            multiline
-                            rows={2} // Reduced rows for a more compact look
-                            fullWidth
-                            margin="dense" // Changed to dense for smaller spacing
-                            error={!!errors.description}
-                            helperText={errors.description ? errors.description.message as string : ''}
-                            {...register("description", { required: 'Description is required' })}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 12 }} textAlign="center">
-                        <Button type="submit" variant="outlined" color="warning">Create Profile</Button>
-                    </Grid>
-                </Grid>
-            </form>
-        </Container>
+        <Box>
+      <Grid container>
+        <Grid size={{ md: 3, sm: 0 }}></Grid>
+        <Grid size={{ md: 6, sm: 12 }}>
+          <Card sx={{ marginTop: "20px" }}>
+
+            <Box textAlign={"center"} margin={"50px"}>
+            <Typography align="center" variant="h6">
+              Register here..
+            </Typography>
+              <Box sx={{ "& .MuiTextField-root,MuiButton-root": { m: 1 } }}>
+                <form onSubmit={onSubmit}>
+                  <TextField
+                    label="First name"
+                    fullWidth
+                    {...register("firstName", {
+                      required: "First name is required",
+                    })}
+                    error={!!errors.firstName}
+                    helperText={
+                      errors.firstName ? errors.firstName.message : ""
+                    }
+                  />
+                  <TextField
+                    label="Last name"
+                    fullWidth
+                    {...register("lastName", {
+                      required: "Last name is required",
+                    })}
+                    error={!!errors.lastName}
+                    helperText={errors.lastName ? errors.lastName.message : ""}
+                  />
+                  <TextField
+                    label="Email"
+                    type="email"
+                    fullWidth
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Enter a valid email",
+                      },
+                    })}
+                    error={!!errors.email}
+                    helperText={errors.email ? errors.email.message : ""}
+                  />
+                  <TextField
+                    label="Password"
+                    type="password"
+                    fullWidth
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters long",
+                      },
+                    })}
+                    error={!!errors.password}
+                    helperText={errors.password ? errors.password.message : ""}
+                  />
+                  <TextField
+                    label="Confirm password"
+                    type="password"
+                    fullWidth
+                    {...register("confirmPassword", {
+                      required: "Please confirm your password",
+                      validate: (value) =>
+                        value === password || "Passwords do not match",
+                    })}
+                    error={!!errors.confirmPassword}
+                    helperText={
+                      errors.confirmPassword
+                        ? errors.confirmPassword.message
+                        : ""
+                    }
+                  />
+                  <Button  variant="contained"
+                    type="submit"
+                    size="large"
+                    fullWidth={true}>
+                    Submit
+                  </Button>
+                </form>
+                
+              </Box>
+     
+            </Box>
+          </Card>
+        </Grid>
+        <Grid size={{ md: 3, sm: 0 }}></Grid>
+      </Grid>
+    </Box>
     )
 }
-export default memo(CreateProfile);
+export default CreateProfile;

@@ -19,8 +19,8 @@ export class User {
   @Column()
   password!: string; // Non-null assertion
 
-  @Column()
-  mobile!: string; // Non-null assertion
+  @Column({ default: '000-000-0000' }) // Set default value for mobile
+  mobile!: string;
 
   @Column()
   socialName!: string; // Non-null assertion
@@ -37,7 +37,7 @@ export class User {
   @Column({ default: 'active' })
   status!: string; // Non-null assertion
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, length: 1000 })
   token!: string; // Non-null assertion
 
   @Column()
