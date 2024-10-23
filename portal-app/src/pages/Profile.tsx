@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardActions, Button, Avatar, Typography, Box } from '@mui/material';
+import { Card, CardContent, CardActions, Button, Avatar, Typography, Box, Slide, Dialog } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { alpha, color, Stack, styled } from '@mui/system';
 import { httpService } from '../services/httpService';
@@ -10,6 +10,7 @@ import { createPortal } from 'react-dom';
 import ReactModal from '../common-ui/ReactModal';
 import ForumTwoToneIcon from '@mui/icons-material/ForumTwoTone';
 import PeopleOutlineTwoToneIcon from '@mui/icons-material/PeopleOutlineTwoTone';
+import { TransitionProps } from '@mui/material/transitions';
 // Styled Components
 const ProfilePage = styled('div')({
     display: 'flex',
@@ -80,7 +81,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
     position: 'absolute',
     top: '60px',
     left: '50%',
-    zIndex:99,
+    zIndex: 99,
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
         width: '8rem',
@@ -88,6 +89,16 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
         top: '122px',
     },
 }));
+
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+        children: React.ReactElement<unknown>;
+    },
+    ref: React.Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const Profile = () => {
     const loggedUser = useSelector((state: any) => state.login.userDetails);
     console.log(loggedUser)
@@ -118,7 +129,7 @@ const Profile = () => {
 
 
                 <CardContent sx={{ padding: '0px' }}>
-                    <Typography my={3} variant="h4" fontSize={{xs:'26px',sm:'32px'}} align="center">
+                    <Typography my={3} variant="h4" fontSize={{ xs: '26px', sm: '32px' }} align="center">
                         {`${loggedUser.firstName} ${loggedUser.lastName}`}
                     </Typography>
                     <Box mb={3}>
@@ -163,17 +174,22 @@ const Profile = () => {
 
 
             </ContentCard>
-            {showForm &&
+            {showForm && <Dialog
+                fullScreen
+                open={showForm}
+                onClose={() => setShowForm(false)}
+                TransitionComponent={Transition}
+            >
+                <CreateProfile isShow={showForm} onClose={() => setShowForm(false)} />
+            </Dialog>}
+            {/* {showForm &&
                 <ReactModal
                     onSave={() => { }}
                     content={<CreateProfile isShow={showForm} onClose={() => setShowForm(false)} />}
                     isShow={showForm}
                     onClose={() => setShowForm(false)} />
-            }
-            {/* {showForm && createPortal(
-                <CreateProfile isShow={showForm} onClose={() => setShowForm(false)} />,
-                document.body
-            )} */}
+            } */}
+
         </ProfilePage>
     );
 }
