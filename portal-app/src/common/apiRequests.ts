@@ -36,7 +36,13 @@ export const API_REQUESTS = {
     },
     CREATE_PROFILE: {
         METHOD: 'POST',
-        URL: apiEndPoints.profile.createPost,
+        URL: apiEndPoints.profile.createProfile,
         PAYLOAD: {}
+    },
+    GET_PROFILE_BY_USER_ID: {
+        METHOD: 'GET',
+        URL: apiEndPoints.profile.getProfileByUserId,
+        PAYLOAD: {},
+        urlParams:{userId: 0}
     },
 }

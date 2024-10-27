@@ -41,6 +41,7 @@ interface FormData {
 }
 const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
   const [roles, setRoles] = useState([]);
+  const [profile, setProfileData] = useState({});
   const loggedUser = useSelector((state: any) => state.login.userDetails);
   const {
     register,
@@ -50,7 +51,19 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
 
   useEffect(() => {
     getRoles();
+    getProfile();
   }, [])
+
+  const getProfile = async () => {
+    API_REQUESTS.GET_PROFILE_BY_USER_ID.urlParams.userId = loggedUser.id
+    try {
+      const data = await httpService(API_REQUESTS.GET_PROFILE_BY_USER_ID);
+      console.log(data)
+      setProfileData(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const getRoles = async () => {
     try {

@@ -13,7 +13,8 @@ export const apiEndPoints = {
         createProfile: '/profile/create',
     },
     profile: {
-        createPost: '/user-profile',
+        createProfile: '/user-profile',
+        getProfileByUserId: '/user-profile/:userId',
         getAllPosts: '/posts/get-all-posts',
     },
     host_api: {

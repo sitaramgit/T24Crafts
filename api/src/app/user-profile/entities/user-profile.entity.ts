@@ -32,8 +32,7 @@ export class UserProfile {
   @Column()
   role: number;
 
-  // Remove the explicit userId column; TypeORM will manage this automatically via @JoinColumn
-  @OneToOne(() => User)  // Define the relationship
-  @JoinColumn({ name: 'userId' })  // This will create the userId foreign key column
-  user: User; 
+  @Column()
+  userId: number;
+
 }

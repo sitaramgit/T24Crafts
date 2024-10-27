@@ -17,3 +17,7 @@ export const stringToColor = (string: string) => {
   
     return color;
   }
+
+  export const replaceUrlParams = (url: string, params: any) => {
+    return url.replace(/:(\w+)/g, (_, key) => params[key] ?? `:${key}`);
+  }

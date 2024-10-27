@@ -14,8 +14,8 @@ export class UserProfileService {
     @InjectRepository(User)  // Inject User repository
     private readonly userRepository: Repository<User>,
   ) {}
-  async create(createUserProfileDto: CreateUserProfileDto): Promise<UserProfile>  {
 
+  async create(createUserProfileDto: CreateUserProfileDto): Promise<UserProfile>  {
      // Find the User entity based on userId from the DTO
      const user = await this.userRepository.findOne({
       where: { id: createUserProfileDto.userId },
@@ -27,24 +27,56 @@ export class UserProfileService {
      // Check if a profile with the same userId already exists
     //  return this.createUserProfileDto;
      const existingProfile = await this.userProfileRepository.findOne({
-      where: { user: { id: createUserProfileDto.userId } }, // Check by userId
+      where: { userId: createUserProfileDto.userId }, // Check by userId
     });
-    console.log(existingProfile, 'checking')
+ 
     if (existingProfile) {
-      // If a profile exists with the same userId, throw a 409 Conflict error
-      throw new HttpException(
-        {
-          status: HttpStatus.CONFLICT,
-          error: 'A profile for this user already exists',
-        },
-        HttpStatus.CONFLICT,
-      );
+       // Call updateProfile method if profile already exists
+       return this.updateProfile(existingProfile.id, createUserProfileDto);
     }
-
-
     // Save the new profile with the relationship
     return await this.userProfileRepository.save(createUserProfileDto);
   }
+
+// Separate method to update profile with error handling
+async updateProfile(profileId: number, updateUserProfileDto: UpdateUserProfileDto): Promise<any> {
+  try {
+    // Update the profile
+    const updatedProfile = await this.userProfileRepository.update(profileId, updateUserProfileDto);
+
+    return {
+      message: 'Profile updated successfully',
+      data: updatedProfile,
+    };
+  } catch (error) {
+    if (error instanceof HttpException) {
+      throw error; // Re-throw known HttpException
+    }
+    throw new HttpException(
+      'Error occurred while updating profile',
+      HttpStatus.INTERNAL_SERVER_ERROR,
+    );
+  }
+}
+
+async getProfileByUserId(userId: number) {
+  try {
+    const profile = await this.userProfileRepository.findOne({
+      where: { userId }, // Find profile by userId
+    });
+
+    if (!profile) {
+      throw new HttpException('Profile not found', HttpStatus.NOT_FOUND);
+    }
+
+    return profile;
+  } catch (error) {
+    throw new HttpException(
+      'Error occurred while retrieving profile',
+      HttpStatus.INTERNAL_SERVER_ERROR,
+    );
+  }
+}
 
   findAll() {
     return `This action returns all userProfile`;
