@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react"
+import { memo, useCallback, useEffect, useMemo, useState } from "react"
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { Card, CardContent, CardActions, Button, Avatar, Typography, Box, Container, TextField, FormControl, InputLabel, Select, MenuItem, DialogTitle, IconButton, AppBar, Toolbar } from '@mui/material';
 import Grid from '@mui/material/Grid2';
@@ -24,7 +24,7 @@ interface ICreateProfile {
   onClose: () => any;
 }
 interface IFormInput {
-  role: string;
+  role: any;
   firstname: string;
   lastname: string;
   gender: string;
@@ -32,21 +32,17 @@ interface IFormInput {
   address: string;
   description: string;
 }
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+
 const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
   const [roles, setRoles] = useState([]);
-  const [profile, setProfileData] = useState({});
+  const [profile, setProfileData] = useState<IFormInput>();
   const loggedUser = useSelector((state: any) => state.login.userDetails);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    control,
   } = useForm<IFormInput>();
 
   useEffect(() => {
@@ -54,11 +50,22 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
     getProfile();
   }, [])
 
+  useEffect(() => {
+    if (profile) {
+      setValue("gender", profile.gender);
+      setValue("role", profile.role);
+      setValue("lastname", profile.lastname);
+      setValue("firstname", profile.firstname);
+      setValue("dob", profile.dob);
+      setValue("address", profile.address);
+      setValue("description", profile.description);
+    }
+  }, [profile]);
+
   const getProfile = async () => {
     API_REQUESTS.GET_PROFILE_BY_USER_ID.urlParams.userId = loggedUser.id
     try {
       const data = await httpService(API_REQUESTS.GET_PROFILE_BY_USER_ID);
-      console.log(data)
       setProfileData(data)
     } catch (error) {
       console.log(error)
@@ -123,15 +130,23 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
                 <Grid size={{ xs: 12 }}>
                   <FormControl fullWidth>
                     <InputLabel>Role</InputLabel>
-                    <Select
-                      {...register("role", { required: 'Role is required' })}
-                      label="Role"
-                      error={!!errors.role}
-                    >
-                      {roles.map((role: any) => (
-                        <MenuItem key={role.id} value={role.id}>{role.roleName}</MenuItem>
-                      ))}
-                    </Select>
+                    <Controller
+                      name="role"
+                      control={control}
+                      rules={{ required: 'Role is required' }}
+                      defaultValue={profile?.role || ""}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          label="Role"
+                          error={!!errors.role}
+                        >
+                          {roles.map((role: any) => (
+                            <MenuItem key={role.id} value={role.id}>{role.roleName}</MenuItem>
+                          ))}
+                        </Select>
+                      )}
+                    />
                     {errors.role && <span style={{ marginLeft: '14px', fontSize: '0.75rem', color: "#d32f2f" }} >{errors.role.message as string}</span>}
                   </FormControl>
                 </Grid>
@@ -140,6 +155,7 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
                     label="First Name"
                     fullWidth
                     margin="dense"
+                    // value={profile?.firstname}
                     error={!!errors.firstname}
                     helperText={errors.firstname && "Please First your name"}
                     // helperText={'Please enter first name'}
@@ -152,6 +168,7 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
                     fullWidth
                     margin="dense" // Changed to dense for smaller spacing
                     error={!!errors.lastname}
+                    // value={profile?.lastname}
                     helperText={errors.lastname ? errors.lastname.message as string : ''}
                     {...register("lastname", { required: 'Last Name is required' })}
                   />
@@ -159,14 +176,23 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
                 <Grid size={{ xs: 12, md: 6 }}>
                   <FormControl fullWidth error={!!errors.gender}>
                     <InputLabel>Gender</InputLabel>
-                    <Select
-                      {...register("gender", { required: 'Gender is required' })}
-                      label="Gender"
-                    >
-                      <MenuItem value="Male">Male</MenuItem>
-                      <MenuItem value="Female">Female</MenuItem>
-                      <MenuItem value="Other">Other</MenuItem>
-                    </Select>
+                    <Controller
+                      name="gender"
+                      control={control}
+                      rules={{ required: 'Gender is required' }}
+                      defaultValue={profile?.gender || ""}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          label="Gender"
+                          error={!!errors.gender}
+                        >
+                          <MenuItem value="Male">Male</MenuItem>
+                          <MenuItem value="Female">Female</MenuItem>
+                          <MenuItem value="Other">Other</MenuItem>
+                        </Select>
+                      )}
+                    />
                     {errors.gender && <span style={{ marginLeft: '14px', fontSize: '0.75rem', color: "#d32f2f" }}>{errors.gender.message as string}</span>}
                   </FormControl>
                 </Grid>
@@ -175,6 +201,7 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
                     label="Date of Birth"
                     type="date"
                     fullWidth
+                    // value={profile?.dob}
                     margin="dense" // Changed to dense for smaller spacing
                     InputLabelProps={{ shrink: true }}
                     error={!!errors.dob}
@@ -188,6 +215,7 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
                     fullWidth
                     margin="dense" // Changed to dense for smaller spacing
                     error={!!errors.address}
+                    // value={profile?.address}
                     helperText={errors.address ? errors.address.message as string : ''}
                     {...register("address", { required: 'Address is required' })}
                   />
@@ -200,6 +228,7 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
                     fullWidth
                     margin="dense" // Changed to dense for smaller spacing
                     error={!!errors.description}
+                    // value={profile?.description}
                     helperText={errors.description ? errors.description.message as string : ''}
                     {...register("description", { required: 'Description is required' })}
                   />
@@ -216,4 +245,4 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
     </Box>
   )
 }
-export default CreateProfile;
+export default memo(CreateProfile);

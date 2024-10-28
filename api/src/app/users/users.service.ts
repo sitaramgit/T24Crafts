@@ -43,7 +43,7 @@ export class UsersService {
   }
 
   async getAllRoles(): Promise<Role[]> {
-    return this.roleRepository.find();
+    return this.roleRepository.find({ where: { active: true } });
   }
 
   async login(email: string, password: string) {

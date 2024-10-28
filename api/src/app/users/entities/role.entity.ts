@@ -7,6 +7,9 @@ export class Role {
 
   @Column()
   roleName: string;
+
+  @Column({ default: false })
+  active: boolean;
 }
 
 export enum UserRole {
