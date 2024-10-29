@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CreateProfile from './components/CreateProfile';
 import Home from './pages/Home';
 import CreateProfile2 from './components/CreateProfile2';
+import MyDates from './pages/MyDates';
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-profile" element={<CreateProfile2 />} />
+        <Route path="/dates/:id" element={<MyDates />} />
+        
         
       </Routes>
     </Router>

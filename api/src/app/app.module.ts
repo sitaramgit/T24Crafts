@@ -8,6 +8,7 @@ import { Role } from './users/entities/role.entity';
 import { UsersModule } from './users/users.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
 import { UserProfile } from './user-profile/entities/user-profile.entity';
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UserProfile } from './user-profile/entities/user-profile.entity';
     }),
     UsersModule,
     UserProfileModule,
+    ScheduleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

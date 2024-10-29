@@ -12,6 +12,7 @@ import ForumTwoToneIcon from '@mui/icons-material/ForumTwoTone';
 import PeopleOutlineTwoToneIcon from '@mui/icons-material/PeopleOutlineTwoTone';
 import { TransitionProps } from '@mui/material/transitions';
 import BackButton from '../common-ui/BackButton';
+import { useNavigate } from 'react-router-dom';
 // Styled Components
 const ProfilePage = styled('div')({
     display: 'flex',
@@ -103,8 +104,12 @@ const Transition = React.forwardRef(function Transition(
 const Profile = () => {
     const loggedUser = useSelector((state: any) => state.login.userDetails);
     console.log(loggedUser)
+    const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
     const closeForm = useCallback(()=>  setShowForm(false),[])
+    const navigateToMyDates = () => {
+        navigate(`/dates/${loggedUser.id}`);
+    }
     return (
         <Box>
         <BackButton/>
@@ -124,8 +129,8 @@ const Profile = () => {
 
 
                 <ThemeSwitcher>
-                    <Button variant="text" disableRipple startIcon={<PeopleOutlineTwoToneIcon />}>
-                        Connect
+                    <Button variant="text" onClick={navigateToMyDates} disableRipple startIcon={<PeopleOutlineTwoToneIcon />}>
+                        My Dates
                     </Button>
                     <Button variant="text" disableRipple startIcon={<ForumTwoToneIcon />}>
                         Message
