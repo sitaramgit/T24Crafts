@@ -103,7 +103,6 @@ const Transition = React.forwardRef(function Transition(
 
 const Profile = () => {
     const loggedUser = useSelector((state: any) => state.login.userDetails);
-    console.log(loggedUser)
     const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
     const closeForm = useCallback(()=>  setShowForm(false),[])

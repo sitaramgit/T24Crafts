@@ -17,6 +17,10 @@ export const apiEndPoints = {
         getProfileByUserId: '/user-profile/:userId',
         getAllPosts: '/posts/get-all-posts',
     },
+    schedule: {
+        createSchedule: '/schedule',
+        getSchedulesByUserAndDate: '/schedule/:userId/:month/:year'
+    },
     host_api: {
         host: 'http://localhost:3000'
     }

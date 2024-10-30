@@ -17,9 +17,9 @@ export class ScheduleController {
     return this.scheduleService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.scheduleService.findOne(+id);
+  @Get(':userId/:month/:year')
+  findOne(@Param('userId') userId: number, @Param('month') month: number, @Param('year') year: number) {
+    return this.scheduleService.getSchedulesByUserAndDate(userId, month, year);
   }
 
   @Patch(':id')

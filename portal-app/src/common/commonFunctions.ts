@@ -21,3 +21,10 @@ export const stringToColor = (string: string) => {
   export const replaceUrlParams = (url: string, params: any) => {
     return url.replace(/:(\w+)/g, (_, key) => params[key] ?? `:${key}`);
   }
+
+  export const getCurrentMonthAndYear = () => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // Months are zero-based (0 = January, so add 1)
+    const currentYear = currentDate.getFullYear();
+    return {currentMonth, currentYear};
+  }

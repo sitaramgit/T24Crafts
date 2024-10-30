@@ -14,7 +14,7 @@ export const httpService = async (request: IApiService) => {
     const userDetails: any = store.getState().login?.userDetails;
 
     // Replace any URL parameters in the request URL with the actual values from urlParams, if provided.
-    request.URL = request?.urlParams ? replaceUrlParams(request.URL, request?.urlParams) : request.URL;
+    request.URL = request?.URL_PARAMS ? replaceUrlParams(request.URL, request?.URL_PARAMS) : request.URL;
 
     // Define a map of HTTP methods and their corresponding request handling functions.
     const httpRequest: any = {

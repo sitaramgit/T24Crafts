@@ -1,7 +1,7 @@
 export interface IApiService {
     METHOD: string;
     URL: string;
-    urlParams?: any;
+    URL_PARAMS?: any;
     PAYLOAD: any;
     HEADERS?: any;
 }

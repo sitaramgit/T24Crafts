@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
 import { UserProfile } from './user-profile/entities/user-profile.entity';
 import { ScheduleModule } from './schedule/schedule.module';
+import { Schedule } from './schedule/entities/schedule.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { ScheduleModule } from './schedule/schedule.module';
       username: 'root',
       password: '',
       database: 'nest_t24db_dev',
-      entities: [User, Role, UserProfile],
+      entities: [User, Role, UserProfile, Schedule],
       synchronize: true, // This automatically creates tables, use false in production!
     }),
     UsersModule,

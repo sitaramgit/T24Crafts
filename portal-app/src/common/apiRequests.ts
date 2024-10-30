@@ -43,6 +43,17 @@ export const API_REQUESTS = {
         METHOD: 'GET',
         URL: apiEndPoints.profile.getProfileByUserId,
         PAYLOAD: {},
-        urlParams:{userId: 0}
+        URL_PARAMS:{userId: 0}
+    },
+    CREATE_SCHEDULE: {
+        METHOD: 'POST',
+        URL: apiEndPoints.schedule.createSchedule,
+        PAYLOAD: {}
+    },
+    GET_SCHEDULE_BY_USER_ID_AND_DATE: {
+        METHOD: 'GET',
+        URL: apiEndPoints.schedule.getSchedulesByUserAndDate,
+        PAYLOAD: {},
+        URL_PARAMS: {userId:0, month:0, year:0}
     },
 }

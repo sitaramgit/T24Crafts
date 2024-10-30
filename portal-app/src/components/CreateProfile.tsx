@@ -63,7 +63,7 @@ const CreateProfile = ({ isShow, onClose }: ICreateProfile) => {
   }, [profile]);
 
   const getProfile = async () => {
-    API_REQUESTS.GET_PROFILE_BY_USER_ID.urlParams.userId = loggedUser.id
+    API_REQUESTS.GET_PROFILE_BY_USER_ID.URL_PARAMS.userId = loggedUser.id
     try {
       const data = await httpService(API_REQUESTS.GET_PROFILE_BY_USER_ID);
       setProfileData(data)
