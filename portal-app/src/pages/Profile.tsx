@@ -92,7 +92,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
     },
 }));
 
-const Transition = React.forwardRef(function Transition(
+export const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement<unknown>;
     },

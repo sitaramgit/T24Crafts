@@ -86,3 +86,7 @@ npx cap open ios
 
 google authentication in react js capacitor androd
 https://lingash.medium.com/how-to-implement-google-login-in-a-react-capacitor-app-for-android-bcdf7e79ae96#:~:text=First%2C%20you%20need%20to%20create,appid%20field%20of%20the%20capacitor.
+
+https://capacitorjs.com/docs/getting-started/environment-setup
+
+https://github.com/capacitor-community/react-hooks
