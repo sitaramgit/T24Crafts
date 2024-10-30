@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe } from '@nestjs/common';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
@@ -8,8 +8,15 @@ export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() createUserProfileDto: CreateUserProfileDto) {
+    // return createUserProfileDto;
     return this.userProfileService.create(createUserProfileDto);
+  }
+
+  @Get(':userId')
+  async getProfileByUserId(@Param('userId', ParseIntPipe) userId: number) {
+    return this.userProfileService.getProfileByUserId(userId);
   }
 
   @Get()

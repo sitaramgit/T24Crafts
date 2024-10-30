@@ -10,10 +10,11 @@ export const apiEndPoints = {
     },
     users: {
         getAllRoles: '/users/getAllRoles',
-        getAllPosts: '/posts/get-all-posts',
+        createProfile: '/profile/create',
     },
     profile: {
-        createPost: '/posts/create-post',
+        createProfile: '/user-profile',
+        getProfileByUserId: '/user-profile/:userId',
         getAllPosts: '/posts/get-all-posts',
     },
     host_api: {

@@ -8,19 +8,31 @@ export class UserProfile {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  fullName: string;
+  @Column({ type: 'varchar', length: 255 })
+  firstname: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  lastname: string;
+
+  @Column({ type: 'varchar', length: 500 })
+  address: string;
+
+  @Column({ default: '000-000-0000' }) // Set default value for mobile
+  mobile!: string;
+
+  @Column({ type: 'text' })
+  description: string;
+
+  @Column({ type: 'date' })
+  dob: Date;
+
+  @Column({ type: 'varchar', length: 10 })
+  gender: string;
 
   @Column()
-  email: string;
+  role: number;
 
   @Column()
-  phoneNumber: string;
+  userId: number;
 
-  @Column()
-  role: string;  // Enum for roles like Artist, Manager, etc.
-
-  @OneToOne(() => User) 
-  @JoinColumn({ name: 'userId' }) // Creates the foreign key userId in UserProfile
-  user: User;
 }
