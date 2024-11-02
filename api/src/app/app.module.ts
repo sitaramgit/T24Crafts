@@ -10,6 +10,8 @@ import { UserProfileModule } from './user-profile/user-profile.module';
 import { UserProfile } from './user-profile/entities/user-profile.entity';
 import { ScheduleModule } from './schedule/schedule.module';
 import { Schedule } from './schedule/entities/schedule.entity';
+import { DatesManagerRequestModule } from './dates-manager-request/dates-manager-request.module';
+import { DatesManagerRequest } from './dates-manager-request/entities/dates-manager-request.entity';
 
 @Module({
   imports: [
@@ -20,12 +22,13 @@ import { Schedule } from './schedule/entities/schedule.entity';
       username: 'root',
       password: '',
       database: 'nest_t24db_dev',
-      entities: [User, Role, UserProfile, Schedule],
-      synchronize: true, // This automatically creates tables, use false in production!
+      entities: [User, Role, UserProfile, Schedule, DatesManagerRequest],
+      synchronize: false, // This automatically creates tables, use false in production!
     }),
     UsersModule,
     UserProfileModule,
     ScheduleModule,
+    DatesManagerRequestModule,
   ],
   controllers: [AppController],
   providers: [AppService],

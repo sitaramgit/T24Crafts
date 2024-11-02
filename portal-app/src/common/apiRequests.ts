@@ -56,4 +56,10 @@ export const API_REQUESTS = {
         PAYLOAD: {},
         URL_PARAMS: {userId:0, month:0, year:0}
     },
+    CREATE_DATE_REQUEST: {
+        METHOD: 'POST',
+        URL: apiEndPoints.dates.createDatesRequest,
+        PAYLOAD: {},
+        URL_PARAMS: {artistId:0, managerId:0}
+    },
 }

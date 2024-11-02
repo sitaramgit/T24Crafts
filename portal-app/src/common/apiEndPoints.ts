@@ -21,6 +21,9 @@ export const apiEndPoints = {
         createSchedule: '/schedule',
         getSchedulesByUserAndDate: '/schedule/:userId/:month/:year'
     },
+    dates: {
+        createDatesRequest: '/dates-manager-requests/:artistId/:managerId'
+    },
     host_api: {
         host: 'http://localhost:3000'
     }

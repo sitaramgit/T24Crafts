@@ -12,7 +12,8 @@ import ForumTwoToneIcon from '@mui/icons-material/ForumTwoTone';
 import PeopleOutlineTwoToneIcon from '@mui/icons-material/PeopleOutlineTwoTone';
 import { TransitionProps } from '@mui/material/transitions';
 import BackButton from '../common-ui/BackButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import useWebSocket from '../common/sockets/web-socket';
 // Styled Components
 const ProfilePage = styled('div')({
     display: 'flex',
@@ -70,11 +71,6 @@ const ThemeSwitcher = styled('div')(({ theme }) => ({
     },
 }));
 
-const ThemeIcon = styled('img')({
-    width: '30px',
-    height: '30px',
-    margin: '0 5px',
-});
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
     width: '10rem',
@@ -104,11 +100,58 @@ export const Transition = React.forwardRef(function Transition(
 const Profile = () => {
     const loggedUser = useSelector((state: any) => state.login.userDetails);
     const navigate = useNavigate();
+    const routerParams: any = useParams();
     const [showForm, setShowForm] = useState(false);
+    const [profile, setProfileData] = useState<any>();
+    const [status, setStatus] = useState('Pending');
     const closeForm = useCallback(()=>  setShowForm(false),[])
+    const [isRequesting, setIsRequesting] = useState(false);
+    const handleStatusUpdate = (requestId: any, newStatus: any) => {
+        console.log(requestId, newStatus)
+        setStatus(newStatus);
+      };
+    
+      // Always call useWebSocket at the top level with `isRequesting`
+    useWebSocket(loggedUser.id, 'manager', handleStatusUpdate, isRequesting);
+
+    useEffect(() => {
+        getProfile();
+    }, [routerParams.id])
+
+
+
     const navigateToMyDates = () => {
         navigate(`/dates/${loggedUser.id}`);
     }
+
+    const getProfile = async () => {
+        API_REQUESTS.GET_PROFILE_BY_USER_ID.URL_PARAMS.userId = routerParams.id
+        try {
+          const data = await httpService(API_REQUESTS.GET_PROFILE_BY_USER_ID);
+          setProfileData(data)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+    
+      const requestForDates = async () => {
+        setIsRequesting(true);  // Trigger WebSocket connection by setting `isRequesting` to true
+        console.log('Request for Dates initiated');
+
+        API_REQUESTS.CREATE_DATE_REQUEST.URL_PARAMS = {
+            artistId: profile.userId,  // Assuming profile holds the artist details
+            managerId: loggedUser.id // Assuming loggedUser holds the manager details
+        }
+        try {
+          const data = await httpService(API_REQUESTS.CREATE_DATE_REQUEST);
+          console.log(data)
+        //   setProfileData(data)
+        } catch (error) {
+          console.log(error)
+        }
+      };
+      console.log(routerParams.id , loggedUser.id )
     return (
         <Box>
         <BackButton/>
@@ -128,9 +171,12 @@ const Profile = () => {
 
 
                 <ThemeSwitcher>
-                    <Button variant="text" onClick={navigateToMyDates} disableRipple startIcon={<PeopleOutlineTwoToneIcon />}>
-                        My Dates
-                    </Button>
+                        {routerParams.id == loggedUser.id ? (<Button variant="text" onClick={navigateToMyDates} disableRipple startIcon={<PeopleOutlineTwoToneIcon />}>
+                            My Dates
+                        </Button>) : (<Button variant="text" onClick={requestForDates} disableRipple startIcon={<PeopleOutlineTwoToneIcon />}>
+                            {status === 'Pending' ? 'Request for Dates' : status}
+                        </Button>)}
+                    
                     <Button variant="text" disableRipple startIcon={<ForumTwoToneIcon />}>
                         Message
                     </Button>
@@ -139,11 +185,11 @@ const Profile = () => {
 
                 <CardContent sx={{ padding: '0px' }}>
                     <Typography my={3} variant="h4" fontSize={{ xs: '26px', sm: '32px' }} align="center">
-                        {`${loggedUser.firstName} ${loggedUser.lastName}`}
+                        {`${profile?.firstname} ${profile?.lastname}`}
                     </Typography>
                     <Box mb={3}>
                         <Typography variant="subtitle1" align="center">
-                            New York, United States
+                            {loggedUser.email}
                         </Typography>
                         <Typography variant="body1" align="center">
                             Web Producer - Web Specialist

@@ -13,20 +13,24 @@ import CreateProfile from './components/CreateProfile';
 import Home from './pages/Home';
 import CreateProfile2 from './components/CreateProfile2';
 import MyDates from './pages/MyDates';
+import NotificationComponent from './components/NotificationComponent';
 
 function App() {
   return (
+  <>
+    <NotificationComponent />
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/create-profile" element={<CreateProfile2 />} />
         <Route path="/dates/:id" element={<MyDates />} />
-        
+
         
       </Routes>
     </Router>
+  </>
   );
 }
 

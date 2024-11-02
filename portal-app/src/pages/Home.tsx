@@ -144,7 +144,7 @@ const Home = () => {
         >
           <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
           <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-          <Avatar alt="Remy Sharp" onClick={() => navigate('/profile')} src={loggedUser.socialPicture} />
+          <Avatar alt="Remy Sharp" onClick={() => navigate(`/profile/${loggedUser.id}`)} src={loggedUser.socialPicture} />
         </BottomNavigation>
       </Paper>
     </Box>

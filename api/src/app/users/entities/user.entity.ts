@@ -37,18 +37,16 @@ export class User {
   @Column({ default: 'active' })
   status!: string; // Non-null assertion
 
-  @Column({ nullable: true, length: 1000 })
+  @Column({ type: 'text', nullable: true })
   token!: string; // Non-null assertion
+
+  @Column()
+  role: number;
 
   @Column()
   createdAt!: Date; // Non-null assertion
 
   @Column({ nullable: true })
   updatedAt!: Date; // Non-null assertion
-
-  // Correctly define the relationship without initialization
-  @ManyToMany(() => Role)
-  @JoinTable()
-  roles: Role[]; // No initialization here
 
 }

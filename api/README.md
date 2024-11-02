@@ -48,3 +48,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 
 npm install @nestjs/typeorm typeorm mysql2
+nest g resource
+npm install @nestjs/websockets @nestjs/platform-socket.io
