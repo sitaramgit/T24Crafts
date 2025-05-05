@@ -1,0 +1,36 @@
+
+.pending {
+   background-color: aquamarine;
+   padding: 10px;
+   margin: 10px;
+   color: #0b570b;
+   border : solid gray 1px;
+   width: 50%;
+   text-align: center;
+}
+.success {
+    background-color:rgb(5, 148, 53);
+    padding: 10px;
+    margin: 10px;
+    color: #f6f4f4;
+    width: 50%;
+    border : solid gray 1px;
+    text-align: center;
+ }
+ table{
+    margin-top: 50px;
+    width: 100%;
+ }
+ thead{
+    background-color: #c2c0c0;
+ }
+ th{
+    padding: 10px;
+    font-weight: 450;
+ }
+ .name-text{
+    color: #228689;
+ }
+tbody{
+    border-bottom: 1px solid #afadad;
+}

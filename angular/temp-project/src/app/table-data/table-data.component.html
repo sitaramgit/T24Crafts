@@ -1,0 +1,18 @@
+<div class="container">
+    <table>
+        <thead>
+           <tr> <th>Display name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Role</th></tr>
+        </thead>
+        <tbody >
+           <tr *ngFor="let user of data">
+            <td class="name-text">{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td ><p [class]="user.status">{{user.status}}</p></td>
+            <td>{{user.role}}</td>
+           </tr>
+        </tbody>
+    </table>
+</div>
